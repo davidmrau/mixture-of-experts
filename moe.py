@@ -100,6 +100,8 @@ class SparseDispatcher(object):
         zeros = torch.zeros(self._gates.size(0), expert_out[-1].size(1), requires_grad=True)
         # combine samples that have been processed by the same k experts
         combined = zeros.index_add(0, self._batch_index, stitched.float())
+        # add eps to all zero values in order to avoid nans when going back to log space
+        combined[combined == 0] = np.finfo(float).eps
         # back to log space
         return combined.log()
 
