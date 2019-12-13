@@ -12,7 +12,7 @@ import torch
 import torch.nn as nn
 from torch.distributions.normal import Normal
 from mlp import MLP
-
+import numpy as np
 class SparseDispatcher(object):
     """Helper for implementing a mixture of experts.
     The purpose of this class is to create input minibatches for the
