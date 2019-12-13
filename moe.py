@@ -163,7 +163,7 @@ class MoE(nn.Module):
         # if only num_experts = 1
         if x.shape[0] == 1:
             return torch.Tensor([0])
-        return x.float().var() / (x.float().mean() + eps)
+        return x.float().var() / (x.float().mean()**2 + eps)
 
 
     def _gates_to_load(self, gates):
