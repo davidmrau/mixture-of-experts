@@ -5,7 +5,7 @@
 ![source: https://techburst.io/outrageously-large-neural-network-gated-mixture-of-experts-billions-of-parameter-same-d3e901f2fe05](https://miro.medium.com/max/1000/1*AaBzgpJcySeO1UDvOQ_CnQ.png)
 
 
-This repository contains the PyTorch implementation of the MoE layer described in the paper [Outrageously Large Neural Networks](https://arxiv.org/abs/1701.06538) for PyTorch. 
+This repository contains the PyTorch re-implementation of the MoE layer described in the paper [Outrageously Large Neural Networks](https://arxiv.org/abs/1701.06538) for PyTorch. 
 
 # Requirements
 This example was tested using torch v1.0.0 and Python v3.6.1 on CPU.
