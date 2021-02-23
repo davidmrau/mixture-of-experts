@@ -15,12 +15,17 @@ To install the requirements run:
 ```pip install -r requirements.py```
 
 
-# Example
+# Dummy Example
 
-The file ```example.py``` contains an example illustrating how to train and evaluate the MoE layer with dummy inputs and targets. To run the example:
+The file ```example.py``` contains an minimal working example illustrating how to train and evaluate the MoE layer with dummy inputs and targets. To run the example:
 
 ```python example.py```
 
+# CIFAR 10 example
+
+The file ```cifar10_example.py``` contains a minimal working example of the CIFAR 10 dataset. It achieves an accuracy of 39% with arbitrary hyper-parameters and not fully converged. To run the example:
+
+```python cifar10_example.py```
 
 
 # Acknowledgements
