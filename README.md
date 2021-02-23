@@ -34,11 +34,12 @@ The code is based on the TensorFlow implementation that can be found [here](http
 
 
 # Citing
-
+```
 @misc{rau2019moe,
     title={Sparsely-gated Mixture-of-Experts PyTorch implementation},
     author={Rau, David},
     journal={https://github.com/davidmrau/mixture-of-experts},
     year={2019}
 }
+```
 
