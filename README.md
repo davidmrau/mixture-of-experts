@@ -6,6 +6,23 @@
 
 
 This repository contains the PyTorch re-implementation of the sparsely-gated MoE layer described in the paper [Outrageously Large Neural Networks](https://arxiv.org/abs/1701.06538) for PyTorch. 
+```python
+
+from moe import MoE
+
+# instantiate the MoE layer
+model = MoE(input_size=1000, num_classes=20, num_experts=10,hidden_size=66, k= 4, noisy_gating=True)
+
+# forward
+y_hat, aux_loss = model(X)
+
+
+```
+
+
+
+
+
 
 # Requirements
 This example was tested using torch v1.0.0 and Python v3.6.1 on CPU.
