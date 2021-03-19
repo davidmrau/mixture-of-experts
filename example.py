@@ -47,7 +47,7 @@ def dummy_data(batch_size, input_size, num_classes):
 # arguments
 input_size = 1000
 num_classes = 20
-num_experts = 10
+num_experts = 11
 hidden_size = 64
 batch_size = 5
 k = 4

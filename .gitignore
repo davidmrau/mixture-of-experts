@@ -1,0 +1,7 @@
+/__pycache__/
+model_best.pth.tar
+/models/
+/r8/
+*.pth.tar
+
+

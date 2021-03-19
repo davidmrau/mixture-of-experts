@@ -13,6 +13,10 @@ import torch.nn as nn
 from torch.distributions.normal import Normal
 from mlp import MLP
 import numpy as np
+import models.cifar as models
+import os
+
+
 class SparseDispatcher(object):
     """Helper for implementing a mixture of experts.
     The purpose of this class is to create input minibatches for the
@@ -139,7 +143,17 @@ class MoE(nn.Module):
         self.hidden_size = hidden_size
         self.k = k
         # instantiate experts
-        self.experts = nn.ModuleList([MLP(self.input_size, self.output_size, self.hidden_size) for i in range(self.num_experts)])
+    
+        #self.experts = nn.ModuleList([MLP(self.input_size, self.output_size, self.hidden_size) for i in range(self.num_experts)])
+        self.experts = nn.ModuleList([models.__dict__['resnet'](num_classes=10, depth=8, block_name='BasicBlock')for i in range(self.num_experts)])
+        # load the weights for each experts
+        lst_of_weights = os.listdir('F:/Research/PHD_AIZU/tiny_ai/end-to-end-stable-msnet/moe/r8/')
+        basename_ = 'F:/Research/PHD_AIZU/tiny_ai/end-to-end-stable-msnet/moe/r8/'
+        for i, wt in enumerate(lst_of_weights):
+          wt_path = basename_  + wt
+          wt_ = torch.load(wt_path)
+          self.experts[i].load_state_dict(wt_)
+
         self.w_gate = nn.Parameter(torch.zeros(input_size, num_experts), requires_grad=True)
         self.w_noise = nn.Parameter(torch.zeros(input_size, num_experts), requires_grad=True)
 
@@ -271,6 +285,9 @@ class MoE(nn.Module):
         dispatcher = SparseDispatcher(self.num_experts, gates)
         expert_inputs = dispatcher.dispatch(x)
         gates = dispatcher.expert_to_gates()
-        expert_outputs = [self.experts[i](expert_inputs[i]) for i in range(self.num_experts)]
+        #print (expert_inputs[0].shape[0])
+        
+         # torch.reshape(expert_inputs[i], (expert_inputs[i].shape[0], 3, 32, 32))
+        expert_outputs = [self.experts[i](torch.reshape(expert_inputs[i], (expert_inputs[i].shape[0], 3, 32, 32))) for i in range(self.num_experts)]
         y = dispatcher.combine(expert_outputs)
         return y, loss
