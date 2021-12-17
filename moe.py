@@ -54,7 +54,7 @@ class SparseDispatcher(object):
         # drop indices
         _, self._expert_index = sorted_experts.split(1, dim=1)
         # get according batch index for each expert
-        self._batch_index = sorted_experts[index_sorted_experts[:, 1],0]
+        self._batch_index = torch.nonzero(gates)[index_sorted_experts[:, 1],0]
         # calculate num samples that each expert gets
         self._part_sizes = list((gates > 0).sum(0).numpy())
         # expand gates to match with self._batch_index
