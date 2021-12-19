@@ -27,15 +27,19 @@ classes = ('plane', 'car', 'bird', 'cat',
            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
 
-device = torch.device('cpu')
-net = MoE(input_size=3072,output_size= 10, num_experts=10, hidden_size=256, noisy_gating=True, k=4)
+if torch.cuda.is_available():
+	device = torch.device('cuda')
+else:
+	device = torch.device('cpu')
+
+net = MoE(input_size=3072,output_size= 10, num_experts=10, hidden_size=256, noisy_gating=True, k=4, device=device)
 net = net.to(device)
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
-
-for epoch in range(2):  # loop over the dataset multiple times
+net.train()
+for epoch in range(1):  # loop over the dataset multiple times
 
     running_loss = 0.0
     for i, data in enumerate(trainloader, 0):
@@ -66,9 +70,11 @@ print('Finished Training')
 
 correct = 0
 total = 0
+net.eval()
 with torch.no_grad():
     for data in testloader:
         images, labels = data
+        images, labels = images.to(device), labels.to(device)
         outputs, _ = net(images.view(images.shape[0], -1))
         _, predicted = torch.max(outputs.data, 1)
         total += labels.size(0)

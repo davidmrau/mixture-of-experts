@@ -28,7 +28,7 @@ def train(x,y, model, loss_fn, optim):
 def eval(x, y, model, loss_fn):
     model.eval()
     # model returns the prediction and the loss that encourages all experts to have equal importance and load
-    y_hat, aux_loss = model(x.float(), train=False)
+    y_hat, aux_loss = model(x.float())
     loss = loss_fn(y_hat, y)
     total_loss = loss + aux_loss
     print("Evaluation Results - loss: {:.2f}, aux_loss: {:.3f}".format(loss.item(), aux_loss.item()))
@@ -52,16 +52,22 @@ hidden_size = 64
 batch_size = 5
 k = 4
 
-# instantiate the MoE layer
-model = MoE(input_size, num_classes, num_experts,hidden_size, k=k, noisy_gating=True)
+# determine device
+if torch.cuda.is_available():
+	device = torch.device('cuda')
+else:
+	device = torch.device('cpu')
 
+# instantiate the MoE layer
+model = MoE(input_size, num_classes, num_experts,hidden_size, k=k, noisy_gating=True, device=device)
+model = model.to(device)
 loss_fn = nn.NLLLoss()
 optim = Adam(model.parameters())
 
 x, y = dummy_data(batch_size, input_size, num_classes)
 
 # train
-model = train(x, y, model, loss_fn, optim)
+model = train(x.to(device), y.to(device), model, loss_fn, optim)
 # evaluate
 x, y = dummy_data(batch_size, input_size, num_classes)
-eval(x, y, model, loss_fn)
+eval(x.to(device), y.to(device), model, loss_fn)
