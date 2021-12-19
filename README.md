@@ -44,6 +44,9 @@ The file ```cifar10_example.py``` contains a minimal working example of the CIFA
 
 ```python cifar10_example.py```
 
+# Used by
+
+[FastMoE: A Fast Mixture-of-Expert Training System](https://arxiv.org/pdf/2103.13262.pdf) This implementation was used as a reference PyTorch implementation for single-GPU training. 
 
 # Acknowledgements
 
