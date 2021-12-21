@@ -13,9 +13,15 @@ from moe import MoE
 # instantiate the MoE layer
 model = MoE(input_size=1000, num_classes=20, num_experts=10,hidden_size=66, k= 4, noisy_gating=True)
 
+#train
+model.train()
 # forward
 y_hat, aux_loss = model(X)
 
+# evaluation
+
+model.eval()
+y_hat, aux_loss = model(X)
 
 ```
 
