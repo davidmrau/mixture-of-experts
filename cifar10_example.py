@@ -1,13 +1,12 @@
 # This file is based on the `https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html`.
 
 import torch
+import torch.nn as nn
+import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
 
-import torch.nn as nn
-import torch.nn.functional as F
 from moe import MoE
-import torch.optim as optim
 
 transform = transforms.Compose(
     [transforms.ToTensor(),
@@ -28,11 +27,11 @@ classes = ('plane', 'car', 'bird', 'cat',
 
 
 if torch.cuda.is_available():
-	device = torch.device('cuda')
+    device = torch.device('cuda')
 else:
-	device = torch.device('cpu')
+    device = torch.device('cpu')
 
-net = MoE(input_size=3072,output_size= 10, num_experts=10, hidden_size=256, noisy_gating=True, k=4, device=device)
+net = MoE(input_size=3072, output_size=10, num_experts=10, hidden_size=256, noisy_gating=True, k=4)
 net = net.to(device)
 
 criterion = nn.CrossEntropyLoss()
@@ -83,4 +82,4 @@ with torch.no_grad():
 print('Accuracy of the network on the 10000 test images: %d %%' % (
     100 * correct / total))
 
-# yields a test accuracy of around 39 %
+# yields a test accuracy of around 34 %
