@@ -13,8 +13,6 @@ import torch.nn as nn
 from torch.distributions.normal import Normal
 import numpy as np
 
-from mlp import MLP
-
 
 class SparseDispatcher(object):
     """Helper for implementing a mixture of experts.
@@ -115,6 +113,21 @@ class SparseDispatcher(object):
         """
         # split nonzero gates for each expert
         return torch.split(self._nonzero_gates, self._part_sizes, dim=0)
+
+class MLP(nn.Module):
+    def __init__(self, input_size, output_size, hidden_size):
+        super(MLP, self).__init__()
+        self.fc1 = nn.Linear(input_size, hidden_size)
+        self.fc2 = nn.Linear(hidden_size, output_size)
+        self.relu = nn.ReLU()
+        self.soft = nn.Softmax(1)
+
+    def forward(self, x):
+        out = self.fc1(x)
+        out = self.relu(out)
+        out = self.fc2(out)
+        out = self.soft(out)
+        return out
 
 
 class MoE(nn.Module):

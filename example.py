@@ -62,7 +62,7 @@ else:
 # instantiate the MoE layer
 model = MoE(input_size, num_classes, num_experts, hidden_size, k=k, noisy_gating=True)
 model = model.to(device)
-loss_fn = nn.NLLLoss()
+loss_fn = nn.CrossEntropyLoss()
 optim = Adam(model.parameters())
 
 x, y = dummy_data(batch_size, input_size, num_classes)
