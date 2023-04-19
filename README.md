@@ -9,9 +9,12 @@ This repository contains the PyTorch re-implementation of the sparsely-gated MoE
 ```python
 
 from moe import MoE
+import torch
 
 # instantiate the MoE layer
 model = MoE(input_size=1000, num_classes=20, num_experts=10,hidden_size=66, k= 4, noisy_gating=True)
+
+X = torch.rand(32, 1000)
 
 #train
 model.train()
