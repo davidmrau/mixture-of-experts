@@ -40,9 +40,9 @@ To install the requirements run:
 ```pip install -r requirements.py```
 
 
-# Dummy Example
+# Example
 
-The file ```example.py``` contains an minimal working example illustrating how to train and evaluate the MoE layer with dummy inputs and targets. To run the example:
+The file ```example.py``` contains a minimal working example illustrating how to train and evaluate the MoE layer with dummy inputs and targets. To run the example:
 
 ```python example.py```
 
