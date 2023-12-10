@@ -31,11 +31,11 @@ if torch.cuda.is_available():
 else:
     device = torch.device('cpu')
 
-net = MoE(input_size=3072, output_size=10, num_experts=10, hidden_size=256, noisy_gating=True, k=4)
+net = MoE(input_size=3072, output_size=10, num_experts=10, hidden_size=128, noisy_gating=True, k=4)
 net = net.to(device)
 
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+optimizer = optim.Adam(net.parameters(), lr=0.001)
 
 net.train()
 for epoch in range(1):  # loop over the dataset multiple times
@@ -82,4 +82,3 @@ with torch.no_grad():
 print('Accuracy of the network on the 10000 test images: %d %%' % (
     100 * correct / total))
 
-# yields a test accuracy of around 34 %
