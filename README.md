@@ -34,7 +34,6 @@ y_hat, aux_loss = model(X)
 
 
 # Requirements
-This example was tested using torch v1.0.0 and Python v3.6.1 on CPU.
 
 To install the requirements run:
 
