@@ -239,10 +239,11 @@ class MoE(nn.Module):
             logits = clean_logits
 
         # calculate topk + 1 that will be needed for the noisy gates
+        logits = self.softmax(logits)
         top_logits, top_indices = logits.topk(min(self.k + 1, self.num_experts), dim=1)
         top_k_logits = top_logits[:, :self.k]
         top_k_indices = top_indices[:, :self.k]
-        top_k_gates = self.softmax(top_k_logits)
+        top_k_gates = top_k_logits / (top_k_logits.sum(1, keepdim=True) + 1e-6)  # normalization
 
         zeros = torch.zeros_like(logits, requires_grad=True)
         gates = zeros.scatter(1, top_k_indices, top_k_gates)
